@@ -31,10 +31,32 @@
 - [功能草图](docs/功能草图.md)
 - [概要设计说明书](docs/概要设计说明书.md)
 
-## 仓库结构
+## 当前工程结构
 
 ```text
 .
+├── code/
+│   ├── backend/
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── core/
+│   │   │   ├── models/
+│   │   │   ├── schemas/
+│   │   │   ├── routers/
+│   │   │   ├── services/
+│   │   │   ├── repositories/
+│   │   │   ├── infrastructure/
+│   │   │   └── data/
+│   │   ├── tests/
+│   │   └── requirements.txt
+│   └── frontend/
+│       ├── src/
+│       │   ├── api/
+│       │   ├── components/
+│       │   ├── pages/
+│       │   ├── store/
+│       │   └── utils/
+│       └── package.json
 ├── README.md
 ├── docs/
 │   ├── 需求分析说明书.md
@@ -43,9 +65,66 @@
 └── .gitignore
 ```
 
+## 本地启动
+
+### Docker Compose
+
+如果本机已安装 Docker，可在项目根目录一条命令启动前后端：
+
+```bash
+docker compose up --build
+```
+
+启动后访问：
+
+- 前端：`http://127.0.0.1:5173`
+- 后端：`http://127.0.0.1:8000`
+- 接口文档：`http://127.0.0.1:8000/docs`
+
+停止服务：
+
+```bash
+docker compose down
+```
+
+如需清空演示数据库：
+
+```bash
+docker compose down -v
+```
+
+### 后端
+
+```bash
+cd code/backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+uvicorn app.main:app --reload
+```
+
+后端默认地址为 `http://127.0.0.1:8000`，接口文档为 `http://127.0.0.1:8000/docs`。
+
+启动时会自动创建 SQLite 数据库并写入演示账号：
+
+- 学生账号：`student` / `student123`
+- 管理员账号：`admin` / `admin123`
+
+### 前端
+
+```bash
+cd code/frontend
+npm install
+npm run dev
+```
+
+前端默认地址为 `http://127.0.0.1:5173`。开发期如果后端未启动，页面会使用 mock 数据渲染，方便先调整界面。
+
 ## 后续计划
 
-1. 搭建 Web 应用项目脚手架，按概要设计确定前后端目录结构。
-2. 实现核心练习链路，包括题库、在线编程、提交评测和 AI 辅助反馈。
-3. 编写测试设计及结果报告，覆盖核心功能、异常输入和用户体验流程。
-4. 完成项目总结 PPT 与最终提交材料整理。
+1. 完善认证体验和题库管理页面。
+2. 接入真实 LLM Provider，并保留本地模板兜底。
+3. 增加提交历史、错题本和学习路径的前后端联动细节。
+4. 编写测试设计及结果报告，覆盖核心功能、异常输入和用户体验流程。
+5. 完成项目总结 PPT 与最终提交材料整理。
