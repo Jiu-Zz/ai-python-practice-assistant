@@ -1,11 +1,12 @@
-import { BookOpen, Code2, GraduationCap, LayoutDashboard, TrendingUp, UserRound } from "lucide-react";
-import type { ComponentType, ReactNode } from "react";
+import { BookOpen, Code2, GraduationCap, LayoutDashboard, LogOut, TrendingUp, UserRound } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 import type { PageKey, User } from "../types";
 
 type NavItem = {
   key: PageKey;
   label: string;
-  icon: ComponentType<{ size?: number }>;
+  icon: LucideIcon;
 };
 
 const navItems: NavItem[] = [
@@ -20,10 +21,11 @@ type AppShellProps = {
   currentPage: PageKey;
   onPageChange: (page: PageKey) => void;
   user: User | null;
+  onLogout: () => void;
   children: ReactNode;
 };
 
-export function AppShell({ currentPage, onPageChange, user, children }: AppShellProps) {
+export function AppShell({ currentPage, onPageChange, user, onLogout, children }: AppShellProps) {
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -55,9 +57,14 @@ export function AppShell({ currentPage, onPageChange, user, children }: AppShell
             <p className="eyebrow">AI Python Practice Assistant</p>
             <h1>{pageTitle(currentPage)}</h1>
           </div>
-          <div className="user-chip">
-            <UserRound size={17} />
-            <span>{user?.nickname || user?.username || "演示学生"}</span>
+          <div className="topbar-actions">
+            <div className="user-chip">
+              <UserRound size={17} />
+              <span>{user?.nickname || user?.username || "演示学生"}</span>
+            </div>
+            <button className="icon-button" type="button" title="退出登录" onClick={onLogout}>
+              <LogOut size={17} />
+            </button>
           </div>
         </header>
         {children}

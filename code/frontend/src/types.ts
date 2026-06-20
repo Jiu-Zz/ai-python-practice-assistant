@@ -9,6 +9,11 @@ export type User = {
   learning_stage: string;
 };
 
+export type AuthPayload = {
+  token: string;
+  user: User;
+};
+
 export type ProblemSummary = {
   id: number;
   title: string;
@@ -35,6 +40,7 @@ export type Dashboard = {
   top_error_types: string[];
   weak_knowledge_points: string[];
   trend: Array<{ date: string; pass_rate: number }>;
+  ai_request_count: number;
 };
 
 export type Recommendation = {
@@ -76,6 +82,7 @@ export type AiTutorResponse = {
   record_id?: number;
   error_type?: string;
   summary: string;
+  solution_code?: string | null;
   possible_causes: string[];
   debug_steps: string[];
   related_concepts: string[];
@@ -94,4 +101,16 @@ export type LearningPath = {
     reason: string;
   }>;
   recommended_problem_ids: number[];
+};
+
+export type SubmissionHistoryItem = {
+  id: number;
+  problem_id: number;
+  problem_title: string;
+  status: string;
+  score: number;
+  passed_count: number;
+  total_count: number;
+  error_type?: string;
+  created_at: string;
 };

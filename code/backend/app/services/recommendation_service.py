@@ -5,7 +5,7 @@ from typing import Dict, List
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models.entities import KnowledgePoint, Problem, Submission, User
+from app.models.entities import AiRecord, KnowledgePoint, Problem, Submission, User
 
 
 class RecommendationService:
@@ -104,6 +104,7 @@ class DashboardService:
             .order_by(Submission.created_at.desc())
             .limit(50)
         ).all()
+        ai_request_count = self.db.query(AiRecord).filter(AiRecord.user_id == current_user.id).count()
         completed_problem_ids = {item.problem_id for item in submissions}
         accepted_problem_ids = {item.problem_id for item in submissions if item.status == "accepted"}
         recent = submissions[:10]
@@ -120,6 +121,7 @@ class DashboardService:
             "top_error_types": [name for name, _ in errors.most_common(3)],
             "weak_knowledge_points": self.recommendations.analyze_weak_points(current_user),
             "trend": self._trend(submissions),
+            "ai_request_count": ai_request_count,
         }
 
     @staticmethod

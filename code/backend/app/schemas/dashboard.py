@@ -15,6 +15,7 @@ class DashboardResponse(BaseModel):
     top_error_types: List[str]
     weak_knowledge_points: List[str]
     trend: List[TrendItem]
+    ai_request_count: int = 0
 
 
 class LearningTopic(BaseModel):

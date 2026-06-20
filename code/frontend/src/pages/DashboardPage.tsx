@@ -2,14 +2,15 @@ import { ArrowRight, BookOpenCheck, Flame, Target, TrendingUp } from "lucide-rea
 import { useEffect, useState } from "react";
 import { getDashboard, getRecommendations } from "../api/client";
 import { StatTile } from "../components/StatTile";
-import type { Dashboard, Recommendation } from "../types";
+import type { Dashboard, Recommendation, User } from "../types";
 import { difficultyLabel } from "../utils/format";
 
 type DashboardPageProps = {
+  user: User;
   onPractice: (problemId: number) => void;
 };
 
-export function DashboardPage({ onPractice }: DashboardPageProps) {
+export function DashboardPage({ user, onPractice }: DashboardPageProps) {
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
@@ -23,7 +24,7 @@ export function DashboardPage({ onPractice }: DashboardPageProps) {
       <section className="workspace-panel intro-panel">
         <div>
           <p className="eyebrow">今日目标</p>
-          <h2>完成 2 道基础题，重点巩固循环和列表</h2>
+          <h2>{user.nickname || user.username}，今天继续练 2 道题，稳住循环和列表</h2>
         </div>
         <button className="primary-button" type="button" onClick={() => onPractice(recommendations[0]?.id ?? 2)}>
           <Target size={17} />
@@ -80,6 +81,7 @@ export function DashboardPage({ onPractice }: DashboardPageProps) {
             </button>
           ))}
         </div>
+        <p className="muted tiny">AI 提示请求次数：{dashboard?.ai_request_count ?? 0}</p>
       </section>
     </div>
   );

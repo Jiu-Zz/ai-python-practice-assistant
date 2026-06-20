@@ -2,6 +2,10 @@ from dataclasses import dataclass
 import os
 from typing import List
 
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 def _get_bool(name: str, default: bool) -> bool:
     value = os.getenv(name)
@@ -30,6 +34,13 @@ class Settings:
     access_token_expire_minutes: int = _get_int("ACCESS_TOKEN_EXPIRE_MINUTES", 60 * 24)
     code_run_timeout_seconds: int = _get_int("CODE_RUN_TIMEOUT_SECONDS", 3)
     code_output_limit: int = _get_int("CODE_OUTPUT_LIMIT", 4000)
+    dashscope_api_key: str = os.getenv("DASHSCOPE_API_KEY", "")
+    dashscope_base_url: str = os.getenv(
+        "DASHSCOPE_BASE_URL",
+        "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    )
+    dashscope_model: str = os.getenv("DASHSCOPE_MODEL", "qwen3.7-plus")
+    ai_timeout_seconds: int = _get_int("AI_TIMEOUT_SECONDS", 30)
     frontend_origins: str = os.getenv(
         "FRONTEND_ORIGINS",
         "http://localhost:5173,http://127.0.0.1:5173",

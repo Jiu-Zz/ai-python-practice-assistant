@@ -46,6 +46,7 @@ export function PracticePage({ problemId }: PracticePageProps) {
       problemId,
       code,
       runResult?.stderr ?? "",
+      [],
       submitResult?.submission_id
     );
     setAiResponse(response);
@@ -67,6 +68,7 @@ export function PracticePage({ problemId }: PracticePageProps) {
           {problem && <span className="difficulty-pill">{difficultyLabel(problem.difficulty)}</span>}
         </div>
         <p>{problem?.description}</p>
+        <p className="muted">参考解不会展示给学生，提交后会基于隐藏测试自动判定。</p>
         <div className="tag-row">
           {problem?.knowledge_points.map((point) => (
             <span className="tag" key={point}>

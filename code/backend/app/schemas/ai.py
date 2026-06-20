@@ -30,6 +30,7 @@ class AiTutorResponse(BaseModel):
     record_id: Optional[int] = None
     error_type: Optional[str] = None
     summary: str
+    solution_code: Optional[str] = None
     possible_causes: List[str]
     debug_steps: List[str]
     related_concepts: List[str]

@@ -46,13 +46,19 @@ export function AiPanel({ aiResponse, hintLevel, onHintLevelChange, onDiagnose, 
           <strong>{aiResponse.error_type || "提示结果"}</strong>
           <p>{aiResponse.summary}</p>
           <div>
-            <span className="field-label">建议步骤</span>
+            <span className="field-label">讲解步骤</span>
             <ol>
               {aiResponse.debug_steps.map((step) => (
                 <li key={step}>{step}</li>
               ))}
             </ol>
           </div>
+          {aiResponse.solution_code ? (
+            <div>
+              <span className="field-label">讲解代码</span>
+              <pre className="output-box">{aiResponse.solution_code}</pre>
+            </div>
+          ) : null}
           <div className="hint-box">{aiResponse.hint_content}</div>
           <div className="tag-row">
             {aiResponse.related_concepts.map((concept) => (

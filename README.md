@@ -97,14 +97,18 @@ docker compose down -v
 
 ```bash
 cd code/backend
-python3 -m venv .venv
-source .venv/bin/activate
+python3.11 -m venv .venv
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+# macOS / Linux
+# source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
 uvicorn app.main:app --reload
 ```
 
 后端默认地址为 `http://127.0.0.1:8000`，接口文档为 `http://127.0.0.1:8000/docs`。
+
+说明：后端依赖要求 Python `3.11+`。如果系统默认 `python` 不是 3.11，Windows 下可使用 `py -3.11` 创建虚拟环境。
 
 启动时会自动创建 SQLite 数据库并写入演示账号：
 
@@ -120,6 +124,8 @@ npm run dev
 ```
 
 前端默认地址为 `http://127.0.0.1:5173`。开发期如果后端未启动，页面会使用 mock 数据渲染，方便先调整界面。
+
+若 `5173` 端口已被占用，Vite 会自动切换到下一个可用端口，例如 `5174`。
 
 ## 后续计划
 
